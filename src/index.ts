@@ -475,7 +475,7 @@ export async function runInContext(
     await runInContext(prelude, context, { ...options, isPrelude: true })
     return runInContext(code, context, options)
   }
-  if (!isNativeRunnable) { // Original: if(isNativeRunnable)
+  if (!isNativeRunnable) { //** Original: if(isNativeRunnable) **//
     if (previousCode === code && isPreviousCodeTimeoutError) {
       context.nativeStorage.maxExecTime *= JSSLANG_PROPERTIES.factorToIncreaseBy
     } else if (!options.isPrelude) {
