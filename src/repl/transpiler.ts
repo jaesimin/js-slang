@@ -20,9 +20,11 @@ function transpileCode(chapter = 1, variant: Variant = 'default', code = '', pre
   validateAndAnnotate(program as Program, context)
   switch (variant) {
     case 'gpu':
+      // @ts-ignore
       transpileToGPU(program)
       break
     case 'lazy':
+      // @ts-ignore
       transpileToLazy(program)
       break
   }

@@ -2700,6 +2700,7 @@ function substPredefinedFns(program: es.Program, context: Context): [es.Program,
   if (context.prelude) {
     // evaluate the list prelude first
     const listPreludeProgram = parse(context.prelude, context)!
+    // @ts-ignore
     combinedProgram.body = listPreludeProgram.body.concat(program.body)
   }
   while (combinedProgram.body.length > originalStatementCount) {

@@ -112,15 +112,18 @@ async function testInContext(code: string, options: TestOptions): Promise<TestRe
       // Mutates program
       switch (options.variant) {
         case 'gpu':
+          // @ts-ignore
           transpileToGPU(parsed)
           pretranspiled = generate(parsed)
           break
         case 'lazy':
+          // @ts-ignore
           transpileToLazy(parsed)
           pretranspiled = generate(parsed)
           break
       }
       try {
+        // @ts-ignore
         transpiled = transpile(parsed, nativeTestContext, true).transpiled
         // replace declaration of builtins since they're repetitive
         transpiled = transpiled.replace(

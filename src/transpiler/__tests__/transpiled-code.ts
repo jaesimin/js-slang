@@ -11,6 +11,7 @@ import { transpile } from '../transpiler'
 test('builtins do get prepended', () => {
   const code = '"ensure_builtins";'
   const context = mockContext(4)
+  // @ts-ignore
   const transpiled = transpile(parse(code, context)!, context).transpiled
   // replace native[<number>] as they may be inconsistent
   const replacedNative = transpiled.replace(/native\[\d+]/g, 'native')
@@ -31,6 +32,7 @@ test('Ensure no name clashes', () => {
     const native = 123;
   `
   const context = mockContext(4)
+  // @ts-ignore
   const transpiled = transpile(parse(code, context)!, context).transpiled
   const replacedNative = transpiled.replace(/native0\[\d+]/g, 'native')
   const replacedGlobalsLine = replacedNative.replace(/\n\(\(.*\)/, '\n(( <globals redacted> )')

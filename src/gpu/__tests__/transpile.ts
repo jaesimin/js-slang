@@ -13,6 +13,7 @@ test('simple for loop gets transpiled correctly', () => {
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -34,6 +35,7 @@ test('many simple for loop gets transpiled correctly', () => {
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -51,6 +53,7 @@ test('simple for loop with constant condition transpiled correctly', () => {
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -68,6 +71,7 @@ test('simple for loop with let condition transpiled correctly', () => {
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -85,6 +89,7 @@ test('simple for loop with math function call transpiled correctly', () => {
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -103,6 +108,7 @@ test('simple for loop with different end condition transpiled correctly', () => 
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -121,6 +127,7 @@ test('2 for loop case gets transpiled correctly', () => {
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -141,6 +148,7 @@ test('2 for loop case with body gets transpiled correctly', () => {
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -159,6 +167,7 @@ test('2 for loop case with 2 indices being written to gets transpiled correctly'
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -187,6 +196,7 @@ test('2 for loop case with 2 indices being written + local updates to gets trans
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -214,6 +224,7 @@ test('2 for loop case with 2 indices being written + use of result variable[i][j
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -234,6 +245,7 @@ test('3 for loop case with 1 index being written to gets transpiled correctly', 
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -254,6 +266,7 @@ test('3 for loop case with 2 indices being written to gets transpiled correctly'
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -274,6 +287,7 @@ test('3 for loop case with 3 indices being written to gets transpiled correctly'
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -312,6 +326,7 @@ test('many for loop case - matrix multiplication (2 transpilations)', () => {
   `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 
@@ -330,6 +345,7 @@ test('resolve naming conflicts by disabling automatic optimizations', () => {
     `
   const context = mockContext(4, 'gpu')
   const program = parse(code, context)!
+  // @ts-ignore
   transpileToGPU(program)
   const transpiled = generate(program)
 

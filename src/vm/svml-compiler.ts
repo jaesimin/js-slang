@@ -951,6 +951,7 @@ function compile(
 
 export function compileForConcurrent(program: es.Program, context: Context) {
   // assume vmPrelude is always a correct program
+  // @ts-ignore
   const prelude = compileToIns(parse(vmPrelude, context)!)
   generatePrimitiveFunctionCode(prelude)
   const vmInternalFunctions = INTERNAL_FUNCTIONS.map(([name]) => name)

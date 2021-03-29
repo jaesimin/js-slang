@@ -202,6 +202,7 @@ Options:
       : options.vmInternalFunctions || []
 
   // the current compiler does not differentiate between chapters 1, 2 or 3
+  // @ts-ignore
   const compiled = compileToIns(program, undefined, vmInternalFunctions)
 
   if (options.compileTo === 'debug') {

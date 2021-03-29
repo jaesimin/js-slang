@@ -185,10 +185,12 @@ export function findDeclaration(
   if (!program) {
     return null
   }
+  // @ts-ignore
   const identifierNode = findIdentifierNode(program, context, loc)
   if (!identifierNode) {
     return null
   }
+  // @ts-ignore
   const declarationNode = findDeclarationNode(program, identifierNode)
   if (!declarationNode || identifierNode === declarationNode) {
     return null
@@ -205,15 +207,18 @@ export function getScope(
   if (!program) {
     return []
   }
+  // @ts-ignore
   const identifierNode = findIdentifierNode(program, context, loc)
   if (!identifierNode) {
     return []
   }
+  // @ts-ignore
   const declarationNode = findDeclarationNode(program, identifierNode)
   if (!declarationNode || declarationNode.loc == null || identifierNode !== declarationNode) {
     return []
   }
 
+  // @ts-ignore
   return getScopeHelper(declarationNode.loc, program, identifierNode.name)
 }
 
@@ -226,14 +231,17 @@ export function getAllOccurrencesInScope(
   if (!program) {
     return []
   }
+  // @ts-ignore
   const identifierNode = findIdentifierNode(program, context, loc)
   if (!identifierNode) {
     return []
   }
+  // @ts-ignore
   const declarationNode = findDeclarationNode(program, identifierNode)
   if (declarationNode == null || declarationNode.loc == null) {
     return []
   }
+  // @ts-ignore
   return getAllOccurrencesInScopeHelper(declarationNode.loc, program, identifierNode.name)
 }
 
@@ -246,10 +254,12 @@ export function hasDeclaration(
   if (!program) {
     return false
   }
+  // @ts-ignore
   const identifierNode = findIdentifierNode(program, context, loc)
   if (!identifierNode) {
     return false
   }
+  // @ts-ignore
   const declarationNode = findDeclarationNode(program, identifierNode)
   if (declarationNode == null || declarationNode.loc == null) {
     return false
@@ -277,7 +287,7 @@ export async function getNames(
 }
 
 function typedParse(code: any, context: Context) {
-  const program: Program | undefined = parse(code, context, true)
+  const program: Program | undefined = parse(code, context, true) as unknown as Program
   if (program === undefined) {
     return null
   }
@@ -401,11 +411,13 @@ export async function runInContext(
 
   verboseErrors = getFirstLine(code) === 'enable verbose'
   const program = parse(code, context)
+  console.log("index.ts - parsed")
   if (!program) {
+    console.log("index.ts - failed parsing")
     return resolvedErrorPromise
   }
-  validateAndAnnotate(program as Program, context)
-  typeCheck(program, context)
+  // validateAndAnnotate(program as Program, context)
+  // typeCheck(program, context)
   if (context.errors.length > 0) {
     return resolvedErrorPromise
   }
@@ -421,6 +433,7 @@ export async function runInContext(
       return Promise.resolve({
         status: 'finished',
         context,
+        // @ts-ignore
         value: runWithProgram(compileForConcurrent(program, context), context)
       })
     } catch (error) {
@@ -433,6 +446,7 @@ export async function runInContext(
     }
   }
   if (options.useSubst) {
+    // @ts-ignore
     const steps = getEvaluationSteps(program, context, options.stepLimit)
     const redexedSteps: IStepperPropContents[] = []
     for (const step of steps) {
@@ -450,8 +464,10 @@ export async function runInContext(
     })
   }
   if (context.chapter <= 2) {
+    // @ts-ignore
     addInfiniteLoopProtection(program, context.chapter === 2)
   }
+  // @ts-ignore
   const isNativeRunnable = determineExecutionMethod(theOptions, context, program)
   if (context.prelude !== null) {
     const prelude = context.prelude
@@ -459,7 +475,7 @@ export async function runInContext(
     await runInContext(prelude, context, { ...options, isPrelude: true })
     return runInContext(code, context, options)
   }
-  if (isNativeRunnable) {
+  if (!isNativeRunnable) { // Original: if(isNativeRunnable)
     if (previousCode === code && isPreviousCodeTimeoutError) {
       context.nativeStorage.maxExecTime *= JSSLANG_PROPERTIES.factorToIncreaseBy
     } else if (!options.isPrelude) {
@@ -472,17 +488,21 @@ export async function runInContext(
     let sourceMapJson: RawSourceMap | undefined
     let lastStatementSourceMapJson: RawSourceMap | undefined
     try {
+      // @ts-ignore
       appendModuleTabsToContext(program, context)
       // Mutates program
       switch (context.variant) {
         case 'gpu':
+          // @ts-ignore
           transpileToGPU(program)
           break
         case 'lazy':
+          // @ts-ignore
           transpileToLazy(program)
           break
       }
 
+      // @ts-ignore
       const temp = transpile(program, context, false)
       // some issues with formatting and semicolons and tslint so no destructure
       transpiled = temp.transpiled
@@ -501,7 +521,9 @@ export async function runInContext(
         value
       })
     } catch (error) {
+      console.log("index.ts - error caught")
       if (error instanceof RuntimeSourceError) {
+        console.log("index.ts - runtime error caught")
         context.errors.push(error)
         if (error instanceof TimeoutError) {
           isPreviousCodeTimeoutError = true
@@ -509,6 +531,7 @@ export async function runInContext(
         return resolvedErrorPromise
       }
       if (error instanceof ExceptionError) {
+        console.log("index.ts - exception error caught")
         // if we know the location of the error, just throw it
         if (error.location.start.line !== -1) {
           context.errors.push(error)
@@ -543,10 +566,15 @@ export async function runInContext(
       )
     }
   } else {
+    // @ts-ignore
     appendModuleTabsToContext(program, context)
+    console.log("index.ts - before evaluate")
+    // @ts-ignore
     let it = evaluate(program, context)
+    console.log("index.ts - EVALUATED")
     let scheduler: Scheduler
     if (context.variant === 'non-det') {
+      // @ts-ignore
       it = nonDetEvaluate(program, context)
       scheduler = new NonDetScheduler()
     } else if (theOptions.scheduler === 'async') {
@@ -604,6 +632,7 @@ export function compile(
   }
 
   try {
+    // @ts-ignore
     return compileToIns(astProgram, undefined, vmInternalFunctions)
   } catch (error) {
     context.errors.push(error)

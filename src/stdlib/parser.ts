@@ -441,6 +441,7 @@ export function parse(x: string, context: Context): Value {
   }
 
   if (program !== undefined) {
+    // @ts-ignore
     return transform(program)
   } else {
     unreachable()
